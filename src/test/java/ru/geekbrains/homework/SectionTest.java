@@ -2,10 +2,16 @@ package ru.geekbrains.homework;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.stream.Stream;
 
 public class SectionTest extends BaseTest {
 
@@ -20,52 +26,42 @@ public class SectionTest extends BaseTest {
                 footer));
     }
 
-    @Test
-    public void courses() {
-        chromeDriver.findElement(By.cssSelector("[id=\"nav\"] [href=\"/courses\"]")).click();
+    @DisplayName("Работа с навигацией по разделам")
+    @ParameterizedTest
+    @MethodSource("List")
+    public void method(String nameSection, String href) {
+
+        chromeDriver.findElement(By.cssSelector("[id=\"nav\"] [href=\"/" + href + "\"]")).click();
+
         Assertions.assertEquals(
-                "Курсы",
+                nameSection,
                 chromeDriver.findElement(By.cssSelector("[id=\"top-menu\"] h2")).getText()
         );
     }
 
-    @Test
-    public void topics() {
-        chromeDriver.findElement(By.cssSelector("[id=\"nav\"] [href=\"/topics\"]")).click();
-        Assertions.assertEquals(
-                "Форум",
-                chromeDriver.findElement(By.cssSelector("[id=\"top-menu\"] h2")).getText()
+    public static Stream<Arguments> List() {
+        return Stream.of(
+                Arguments.of("Курсы", "courses"),
+                Arguments.of("Форум", "topics"),
+                Arguments.of("Блог", "posts"),
+                Arguments.of("Тесты", "tests"),
+                Arguments.of("Карьера", "career")
         );
+
     }
-
-    @Test
-    public void posts() {
-        chromeDriver.findElement(By.cssSelector("[id=\"nav\"] [href=\"/posts\"]")).click();
-        chromeDriver.findElement(By.cssSelector("[class=\"gb-empopup-close\"]")).click();
-        chromeDriver.findElement(By.cssSelector("button [class=\"svg-icon icon-popup-close-button \"]")).click();
-        Assertions.assertEquals(
-                "Блог",
-                chromeDriver.findElement(By.cssSelector("id=\"top-menu\"] h2")).getText()
-        );
-    }
-
-    @Test
-    public void tests() {
-        chromeDriver.findElement(By.cssSelector("[id=\"nav\"] [href=\"/tests\"]")).click();
-        Assertions.assertEquals(
-                "Тесты",
-                chromeDriver.findElement(By.cssSelector("id=\"top-menu\"] h2")).getText()
-        );
-    }
-
-    @Test
-    public void career() {
-        chromeDriver.findElement(By.cssSelector("[id=\"nav\"] [href=\"/career\"]")).click();
-        Assertions.assertEquals(
-                "Карьера",
-                chromeDriver.findElement(By.cssSelector("id=\"top-menu\"] h2")).getText()
-        );
-    }
-
-
 }
+//    Работает и без закрытия попапа, оставила себе для примера)
+//    @Test
+//    public void posts() {
+//        chromeDriver.findElement(By.cssSelector("[id=\"nav\"] [href=\"/posts\"]")).click();
+//        chromeDriver.findElement(By.cssSelector("[class=\"gb-empopup-close\"]")).click();
+//        chromeDriver.findElement(By.cssSelector("button [class=\"svg-icon icon-popup-close-button \"]")).click();
+//        Assertions.assertEquals(
+//                "Блог",
+//                chromeDriver.findElement(By.cssSelector("id=\"top-menu\"] h2")).getText()
+//        );
+//    }
+
+
+
+
