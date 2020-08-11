@@ -16,6 +16,7 @@
         <selenium-java.version>3.141.59</selenium-java.version>
         <junit-jupiter.version>5.6.2</junit-jupiter.version>
         <hamcrest.version>2.2</hamcrest.version>
+        <webdrivermanager.version>4.1.0</webdrivermanager.version>
     </properties>
 
 
@@ -34,8 +35,13 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-core</artifactId>
-            <version>2.2</version>
-            <scope>test</scope>
+            <version>${hamcrest.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
         </dependency>
     </dependencies>
 

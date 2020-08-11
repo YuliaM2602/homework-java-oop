@@ -1,66 +1,74 @@
 package ru.geekbrains.homework;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import ru.geekbrains.homework.base.BaseTest;
+import ru.geekbrains.homework.page.ContentPage;
 
 import java.util.stream.Stream;
 
 public class SectionTest extends BaseTest {
 
+    @BeforeEach
+    public void beforeEach(){
+        chromeDriver.get("https://geekbrains.ru/events");
+    }
+
     @AfterEach
     void tearDown() {
-        WebElement header = chromeDriver.findElementByCssSelector("[class*=\"gb-header__content\"]");
-        WebElement footer = chromeDriver.findElementByCssSelector("[class=\"site-footer__content\"]");
 
+        ContentPage contentPage = PageFactory.initElements(chromeDriver, ContentPage.class);
         wait15second.until(ExpectedConditions.visibilityOf(
-                header));
+                contentPage.getHeader()));
         wait15second.until(ExpectedConditions.visibilityOf(
-                footer));
+                contentPage.getFooter()));
+    }
+
+    @DisplayName("Блог")
+    @Test
+    public void posts() {
+        String namePage = "Блог";
+        ContentPage contentPage = new ContentPage(chromeDriver);
+
+        contentPage.getSections().getButton(namePage).click();
+        contentPage.getButtonClosePopUp1().click();
+        contentPage.getButtonClosePopUp2().click();
+
+        contentPage.checkNameSection(namePage);
     }
 
     @DisplayName("Работа с навигацией по разделам")
     @ParameterizedTest
     @MethodSource("List")
-    public void method(String nameSection, String href) {
+    public void courses(String nameSection) {
+        ContentPage contentPage = new ContentPage(chromeDriver);
 
-        chromeDriver.findElement(By.cssSelector("[id=\"nav\"] [href=\"/" + href + "\"]")).click();
+        contentPage.getSections().getButton(nameSection).click();
 
-        Assertions.assertEquals(
-                nameSection,
-                chromeDriver.findElement(By.cssSelector("[id=\"top-menu\"] h2")).getText()
-        );
+        contentPage.checkNameSection(nameSection);
     }
+
 
     public static Stream<Arguments> List() {
         return Stream.of(
-                Arguments.of("Курсы", "courses"),
-                Arguments.of("Форум", "topics"),
-                Arguments.of("Блог", "posts"),
-                Arguments.of("Тесты", "tests"),
-                Arguments.of("Карьера", "career")
+//                Arguments.of("Курсы", "courses"),
+                Arguments.of("Вебинары"),
+                Arguments.of("Форум"),
+                Arguments.of("Тесты"),
+                Arguments.of("Карьера")
         );
 
     }
 }
-//    Работает и без закрытия попапа, оставила себе для примера)
-//    @Test
-//    public void posts() {
-//        chromeDriver.findElement(By.cssSelector("[id=\"nav\"] [href=\"/posts\"]")).click();
-//        chromeDriver.findElement(By.cssSelector("[class=\"gb-empopup-close\"]")).click();
-//        chromeDriver.findElement(By.cssSelector("button [class=\"svg-icon icon-popup-close-button \"]")).click();
-//        Assertions.assertEquals(
-//                "Блог",
-//                chromeDriver.findElement(By.cssSelector("id=\"top-menu\"] h2")).getText()
-//        );
-//    }
+
+
 
 
 

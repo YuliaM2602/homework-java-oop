@@ -1,27 +1,34 @@
 package ru.geekbrains.homework;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import ru.geekbrains.assertionsJUnit.nullTest.AssertNotNullTest;
+import ru.geekbrains.homework.base.BaseTest;
+import ru.geekbrains.homework.page.SearchPage;
 
-import java.util.List;
+
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class SearchTest extends BaseTest {
+
+    @BeforeEach
+    public void beforeEach(){
+        chromeDriver.get("https://geekbrains.ru/events");
+    }
+
     @DisplayName("Поиск элементов")
     @Test
     void search() {
-        WebElement buttonSearch = chromeDriver.findElement(By.cssSelector("[class=\"show-search-form\"] [class=\"svg-icon icon-search \"]"));
-        buttonSearch.click();
-        WebElement inputSearch = chromeDriver.findElement(By.cssSelector("[class=\"search-panel__search-field\"]"));
-        inputSearch.sendKeys("java");
+        SearchPage searchPage = new SearchPage(chromeDriver);
+        searchPage.getButtonSearch().click();
+        searchPage.getInputSearch().sendKeys("java");
 
         WebElement professions = chromeDriver.findElement(By.cssSelector("[id=\"professions\"] h2"));
         WebElement courses = chromeDriver.findElement(By.xpath(".//header/h2[text()='Курсы']"));
