@@ -6,58 +6,44 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import ru.geekbrains.homework.block.HeaderBlock;
 import ru.geekbrains.homework.block.Sections;
 
-public class ContentPage extends PageFactory {
+public abstract class ContentPage extends BasePageObject implements OpenUrl {
+    protected Sections sections;
+    protected HeaderBlock headerBlock;
 
 
+    @FindBy(css = "div button svg[class='svg-icon icon-popup-close-button ']")
+    private WebElement buttonPopUpClosed;
 
-    @FindBy (css = "[class*='gb-header__content']")
-    private WebElement header;
+    public ContentPage(WebDriver chromedriver) {
+        super(chromedriver);
+        this.headerBlock = new HeaderBlock(chromedriver);
+        this.sections = new Sections(chromedriver);
+        PageFactory.initElements(chromedriver, this);
+    }
 
-    @FindBy (css = "[class='site-footer__content']")
-    private WebElement footer;
-
-    @FindBy (css = "[id=\"top-menu\"] h2")
-    private WebElement nameSection;
-
-    @FindBy (css = "[class=\"gb-empopup-close\"]")
-    private WebElement buttonClosePopUp1;
-
-    @FindBy (css = "button [class=\"svg-icon icon-popup-close-button \"]")
-    private WebElement buttonClosePopUp2;
-
-    private Sections sections;
-
-    public ContentPage(WebDriver chromedriver){
-        initElements(chromedriver, this);
-        sections = new Sections(chromedriver);
+    public ContentPage closedPopUp() {
+        wait10second.until(ExpectedConditions.visibilityOf(buttonPopUpClosed));
+        if (buttonPopUpClosed.isDisplayed()) {
+            this.buttonPopUpClosed.click();
+        }
+        return this;
     }
 
     public Sections getSections() {
         return sections;
     }
 
-    public void checkNameSection (String expectedNameSection){
-        Assertions.assertEquals(expectedNameSection, nameSection.getText());
-    }
-
-    public WebElement getHeader() {
-        return header;
-    }
-
-    public WebElement getFooter() {
-        return footer;
+    public HeaderBlock getHeader() {
+        return headerBlock;
     }
 
 
-    public WebElement getButtonClosePopUp1() {
-        return buttonClosePopUp1;
+    public ContentPage checkNamePage(String exampleNamePage) {
+        headerBlock.checkNamePage(exampleNamePage);
+        return this;
     }
-
-    public WebElement getButtonClosePopUp2() {
-        return buttonClosePopUp2;
-    }
-
-
 }

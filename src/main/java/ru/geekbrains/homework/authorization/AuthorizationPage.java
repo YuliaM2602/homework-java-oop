@@ -1,11 +1,15 @@
-package ru.geekbrains.homework.page;
+package ru.geekbrains.homework.authorization;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import ru.geekbrains.homework.page.BasePageObject;
+import ru.geekbrains.homework.page.ContentPage;
+import ru.geekbrains.homework.page.HomePage;
+import ru.geekbrains.homework.page.OpenUrl;
 
-public class AuthorizationPage {
+public class AuthorizationPage extends BasePageObject implements OpenUrl {
     @FindBy(
             css = "[placeholder=\"Email\"]")
     private WebElement inputLogin;
@@ -14,33 +18,25 @@ public class AuthorizationPage {
     private WebElement inputPassword;
 
     @FindBy(css = "[id=\"registration-form-button\"]")
+
     private WebElement buttonSingIn;
 
-    private WebDriver chromeDriver;
 
     public AuthorizationPage(WebDriver chromeDriver) {
-        this.chromeDriver = chromeDriver;
+        super(chromeDriver);
         PageFactory.initElements(chromeDriver, this);
     }
 
-    public ContentPage authorization(String login, String password) {
+    public HomePage authorization(String login, String password) {
         inputLogin.sendKeys(login);
         inputPassword.sendKeys(password);
-
         buttonSingIn.click();
-
-        return new ContentPage(chromeDriver);
+        return new HomePage(chromedriver);
     }
 
-    public WebElement getInputLogin() {
-        return inputLogin;
-    }
-
-    public WebElement getInputPassword() {
-        return inputPassword;
-    }
-
-    public WebElement getButtonSingIn() {
-        return buttonSingIn;
+    @Override
+    public AuthorizationPage openUrl() {
+        chromedriver.get("https://geekbrains.ru/login");
+        return this;
     }
 }

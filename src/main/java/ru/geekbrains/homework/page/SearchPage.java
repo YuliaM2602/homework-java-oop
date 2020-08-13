@@ -2,31 +2,25 @@ package ru.geekbrains.homework.page;
 
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import ru.geekbrains.homework.block.Search;
+import ru.geekbrains.homework.block.SearchTab;
 
 
-public class SearchPage extends PageFactory {
+public class SearchPage extends ContentPage {
 
-    @FindBy(css = "\"[class='show-search-form'] [class='svg-icon icon-search ']\"")
-    private WebElement buttonSearch;
+    private SearchTab searchTab;
 
-    @FindBy(css = "[class=\"search-panel__search-field\"]")
-    private WebElement inputSearch;
-
-    public SearchPage(ChromeDriver chromeDriver) {
-        initElements(chromeDriver, this);
+    public SearchPage(WebDriver chromedriver) {
+        super(chromedriver);
+        this.searchTab = new SearchTab(chromedriver);
     }
 
-
-    public WebElement getButtonSearch() {
-        return buttonSearch;
+    @Override
+    public SearchPage openUrl() {
+        chromedriver.get("https://geekbrains.ru/search");
+        return this;
     }
 
-    public WebElement getInputSearch() {
-        return inputSearch;
+    public SearchTab getSearchTab() {
+        return searchTab;
     }
 }
