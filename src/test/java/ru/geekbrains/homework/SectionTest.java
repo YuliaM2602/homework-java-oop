@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.geekbrains.homework.base.BaseTest;
-import ru.geekbrains.homework.page.ContentPage;
+import ru.geekbrains.homework.testgb.page.ContentPage;
 
 import java.util.stream.Stream;
 

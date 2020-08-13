@@ -6,10 +6,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.geekbrains.homework.base.BaseTest;
-import ru.geekbrains.homework.page.SearchPage;
+import ru.geekbrains.homework.testgb.page.SearchPage;
 
 
 
