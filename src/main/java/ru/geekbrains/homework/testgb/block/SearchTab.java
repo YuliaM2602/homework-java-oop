@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import ru.geekbrains.homework.testgb.page.BasePageObject;
-import sun.tools.jconsole.Tab;
+
 
 import static org.hamcrest.MatcherAssert.assertThat;
 

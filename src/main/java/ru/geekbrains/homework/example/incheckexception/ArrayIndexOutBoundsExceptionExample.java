@@ -1,8 +1,0 @@
-package ru.geekbrains.homework.example.incheckexception;
-
-public class ArrayIndexOutBoundsExceptionExample {
-    public static void main(String[] args) {
-        int [] arr = {1,2,3};
-        System.out.println(arr[3]);
-    }
-}

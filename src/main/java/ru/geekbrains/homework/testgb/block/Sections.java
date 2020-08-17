@@ -52,12 +52,15 @@ public class Sections extends BasePageObject {
                 break;
             case EVENTS:
                 buttonEvents.click();
+                contentPage = new HomePage(chromedriver);
                 break;
             case TOPICS:
                 buttonTopics.click();
+                contentPage = new HomePage(chromedriver);
                 break;
             case POSTS:
                 buttonPosts.click();
+                contentPage = new HomePage(chromedriver);
                 break;
             case TESTS:
                 buttonTests.click();
@@ -65,6 +68,7 @@ public class Sections extends BasePageObject {
                 break;
             case CAREER:
                 buttonCareer.click();
+                contentPage = new HomePage(chromedriver);
                 break;
         }
         if (contentPage == null) {
