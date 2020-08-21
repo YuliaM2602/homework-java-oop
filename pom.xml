@@ -19,8 +19,12 @@
         <webdrivermanager.version>4.1.0</webdrivermanager.version>
         <allure.version>2.13.5</allure.version>
         <aspectj.version>1.9.4</aspectj.version>
-        <maven-surefire.version>2.22.2</maven-surefire.version>
         <lombok.version>1.18.12</lombok.version>
+
+        <maven-surefire.version>2.22.2</maven-surefire.version>
+        <allure-maven.version>2.10.0</allure-maven.version>
+        <allure-reportVersion.version>2.13.0</allure-reportVersion.version>
+
     </properties>
 
 
@@ -68,9 +72,9 @@
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
-                <version>2.10.0</version>
+                <version>${allure-maven.version}</version>
                 <configuration>
-                    <reportVersion>2.13.0</reportVersion>
+                    <reportVersion>${allure-reportVersion.version}</reportVersion>
                     <resultsDirectory>allure-results</resultsDirectory>
                 </configuration>
             </plugin>
@@ -83,7 +87,7 @@
                     <!--true - Статус билда не зависит от прохождения тестов-->
                     <testFailureIgnore>true</testFailureIgnore>
                     <includes>
-                        <include>**/*AuthorizationTest*.java</include>
+                        <include>**/*WebTest*.java</include>
                     </includes>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
